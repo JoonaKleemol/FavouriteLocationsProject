@@ -8,10 +8,10 @@ using System.Collections;
 
 namespace Suosikkisijainnit
 {
-    class Program
+    class Suosikkisijanti
     {
 
-        public static void Main()
+        public void Suosikki()
         {
 
             
@@ -113,3 +113,4 @@ namespace Suosikkisijainnit
         }
     }
 }
+
