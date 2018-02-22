@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Collections;
+using SwitchCaseDemo;
 
 namespace Suosikkisijainnit
 {
@@ -14,7 +15,7 @@ namespace Suosikkisijainnit
         public void Suosikki()
         {
 
-            
+
             // Specify the directory you want to manipulate.
             string OmaDatabase = @"c:\MyDir";
 
@@ -41,30 +42,83 @@ namespace Suosikkisijainnit
                 Console.WriteLine("The process failed: {0}", e.ToString());
             }
 
-            string path = @"c:\MyDir\Suosikkisijannit.txt";
+            Program ohjelma = new Program();
+            
+            int valinta = 0;
+            string newValinta;
+           
+            Start:
 
-
-            using (StreamWriter sw = File.AppendText(path))
+            try
             {
-                int SuosikkiSijaintienMaara = 0;
-                string newSuosikkiSijaintienMaara;
+               
+                Console.WriteLine("Valitse Toiminto\n\n[1]. Suosikkisijaintien lisäys\n[2]. Suosikkisijannit\n[3]. Poista Suosikkisijainteja\n[4]. Tyhjennä Suosikkilista\n[5]. Tyhjennä ikkuna\n[6]. Exit to main menu");
+                Console.Write("\nToiminto: ");
+                newValinta = Console.ReadLine();
+                valinta = int.Parse(newValinta);
+                Console.Write("\n");
 
-                try
+
+                switch (valinta)
                 {
-                    //Kysytään monta Sijaintia tiedostoon halutaan lisätä.
-                    Console.WriteLine("Kuinka monta suosikkisijaintia haluat lisätä?");
-                    newSuosikkiSijaintienMaara = Console.ReadLine();
-                    SuosikkiSijaintienMaara = int.Parse(newSuosikkiSijaintienMaara);
+                    case 1: SuosikkisijantienLisäys(); break;
+                    case 2: SuosikkisijantiLista(); break;
+                    case 3: SuosikkiSijainninPoisto(); break;
+                    case 4: File.WriteAllText(@"c:\MyDir\Suosikkisijannit.txt", String.Empty); break; // Tyhejentää suosikkisijannit tiedoston
+                    case 5: Console.WriteLine("\nTyhjennetään ikkuna. Paina mitä vain näppäintä.");
+                            Console.ReadKey();
+                            Console.Clear(); break;
+                    case 6: goto Finish; 
+                    default: Console.WriteLine("Sopimaton valinta"); break;                   
                 }
-
-                catch (Exception e) { Console.WriteLine("Kirjain ei ole numero senkin idiootti"); }
-
-                for (int i = 0; i < SuosikkiSijaintienMaara; i++)
-                {
-                    Console.WriteLine("\nLisää haluamasi sijainti listaan.");
-                    sw.WriteLine(Console.ReadLine());
-                }
+                
             }
+
+            catch { Console.WriteLine("Sopimaton valinta"); }
+            goto Start;
+            
+            Finish:;
+            Console.WriteLine("Palataan päävalikkoon");
+
+        }
+            
+/*--------------------------------------------------------------------------------------------------------------------*/
+
+            public void SuosikkisijantienLisäys()
+            {
+
+
+                string path = @"c:\MyDir\Suosikkisijannit.txt";
+
+
+                using (StreamWriter sw = File.AppendText(path))
+                {
+                    int SuosikkiSijaintienMaara = 0;
+                    string newSuosikkiSijaintienMaara;
+
+                    try
+                    {
+                        //Kysytään monta Sijaintia tiedostoon halutaan lisätä.
+                        Console.WriteLine("Kuinka monta suosikkisijaintia haluat lisätä?");
+                        newSuosikkiSijaintienMaara = Console.ReadLine();
+                        SuosikkiSijaintienMaara = int.Parse(newSuosikkiSijaintienMaara);
+                    }
+
+                    catch (Exception) { Console.WriteLine("Kirjain ei ole numero senkin idiootti"); }
+
+                    for (int i = 0; i < SuosikkiSijaintienMaara; i++)
+                    {
+                        Console.WriteLine("\nLisää haluamasi sijainti listaan.");
+                        sw.WriteLine(Console.ReadLine());
+                    }               
+            }
+        }
+
+        /*--------------------------------------------------------------------------------------------------------------------*/
+
+        public void SuosikkisijantiLista()
+        {
+            string path = @"c:\MyDir\Suosikkisijannit.txt";
 
             using (StreamReader sr = File.OpenText(path))
             {
@@ -77,6 +131,13 @@ namespace Suosikkisijainnit
 
             }
 
+        }
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+
+        public void SuosikkiSijainninPoisto()
+        {
+            string path = @"c:\MyDir\Suosikkisijannit.txt";
             string uusiSana;
             string vanhaSana;
             try
@@ -112,5 +173,6 @@ namespace Suosikkisijainnit
             catch { Console.WriteLine("Et poistanut Sijainteja"); }
         }
     }
+   
 }
 

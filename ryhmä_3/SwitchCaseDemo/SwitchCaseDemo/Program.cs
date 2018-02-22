@@ -11,7 +11,7 @@ namespace SwitchCaseDemo
 {
     class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             // TÄÄ LUO RANDOM GENERAATTORI LISTAN 
             StreamWriter writer = File.CreateText(@"C:\mydir\rndSijainnit.txt");
@@ -51,7 +51,7 @@ namespace SwitchCaseDemo
                     case 1: rand.ToString(); break;         // break is mandatory; no fall-through
                     case 2: rand2.Suosikki(); break;
                     case 3: File.WriteAllText(@"c:\MyDir\Suosikkisijannit.txt", String.Empty); break; // Tyhejentää suosikkisijannit tiedoston
-                    case 4: goto End; // Poistu Menusta
+                    case 4: goto Finish; // Poistu Menusta
                     default: Console.WriteLine("Sopimaton valinta"); break;
                 }
             }
@@ -62,12 +62,12 @@ namespace SwitchCaseDemo
             // VIRHE ILMOITUS
             catch { Console.WriteLine("Sopimaton valinta"); }
             // VIRHE ILMOITUS 
-            Console.WriteLine("\nPaina mitä vain näppäointä tyhjentääksesi ruudun");
+            Console.WriteLine("\nPaina mitä vain näppäintä tyhjentääksesi ruudun");
             Console.ReadKey();
             Console.Clear();
             goto Start; // PALAA ALKUUN
 
-            End: Console.WriteLine("Poistutaan ohjelmasta");
+            Finish: Console.WriteLine("Poistutaan ohjelmasta");
 
         }
     }
