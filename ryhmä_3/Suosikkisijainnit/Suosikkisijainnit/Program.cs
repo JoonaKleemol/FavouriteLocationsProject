@@ -43,6 +43,7 @@ namespace Suosikkisijainnit
 
             string path = @"c:\MyDir\Suosikkisijannit.txt";
 
+
             using (StreamWriter sw = File.AppendText(path))
             {
                 int SuosikkiSijaintienMaara = 0;
@@ -71,8 +72,25 @@ namespace Suosikkisijainnit
                 }
 
             }
+            string uusiSana;
+            string vanhaSana;
+            Console.WriteLine("Minkä sijainnin haluat poistaa? ");
+            vanhaSana = Console.ReadLine();
+            Console.WriteLine("Kirjoita uusi suosikkisijainti: ");
+            uusiSana = Console.ReadLine();
+            string text = File.ReadAllText(@"c:\MyDir\Suosikkisijannit.txt");
+            text = text.Replace(vanhaSana, uusiSana);
+            File.WriteAllText(@"c:\MyDir\Suosikkisijannit.txt", text);
+
+            using (StreamReader sr = File.OpenText(path))
+            {
+                string s = "";
+                Console.WriteLine("\nNykyiset suosikkisijainnit: ");
+                while ((s = sr.ReadLine()) != null)
+                {
+                    Console.WriteLine(s);
+                }
+            }
         }
-
-
     }
 }
