@@ -49,11 +49,15 @@ namespace Suosikkisijainnit
                 int SuosikkiSijaintienMaara = 0;
                 string newSuosikkiSijaintienMaara;
 
+                try
+                {
+                    //Kysytään monta Sijaintia tiedostoon halutaan lisätä.
+                    Console.WriteLine("Kuinka monta suosikkisijaintia haluat lisätä?");
+                    newSuosikkiSijaintienMaara = Console.ReadLine();
+                    SuosikkiSijaintienMaara = int.Parse(newSuosikkiSijaintienMaara);
+                }
 
-                //Kysytään monta Sijaintia tiedostoon halutaan lisätä.
-                Console.WriteLine("Kuinka monta suosikkisijaintia haluat lisätä?");
-                newSuosikkiSijaintienMaara = Console.ReadLine();
-                SuosikkiSijaintienMaara = int.Parse(newSuosikkiSijaintienMaara);
+                catch (Exception e) { Console.WriteLine("Kirjain ei ole numero senkin idiootti"); }
 
                 for (int i = 0; i < SuosikkiSijaintienMaara; i++)
                 {
@@ -74,23 +78,37 @@ namespace Suosikkisijainnit
             }
             string uusiSana;
             string vanhaSana;
-            Console.WriteLine("Minkä sijainnin haluat poistaa? ");
-            vanhaSana = Console.ReadLine();
-            Console.WriteLine("Kirjoita uusi suosikkisijainti: ");
-            uusiSana = Console.ReadLine();
-            string text = File.ReadAllText(@"c:\MyDir\Suosikkisijannit.txt");
-            text = text.Replace(vanhaSana, uusiSana);
-            File.WriteAllText(@"c:\MyDir\Suosikkisijannit.txt", text);
-
-            using (StreamReader sr = File.OpenText(path))
+            try
             {
-                string s = "";
-                Console.WriteLine("\nNykyiset suosikkisijainnit: ");
-                while ((s = sr.ReadLine()) != null)
+                Console.WriteLine("Minkä sijainnin haluat poistaa? ");
+                vanhaSana = Console.ReadLine();
+            }
+            catch { return; }
+
+            try
+            {
+                Console.WriteLine("Kirjoita uusi suosikkisijainti: ");
+                uusiSana = Console.ReadLine();
+            }
+            catch { return; }
+
+            try
+            {
+                string text = File.ReadAllText(@"c:\MyDir\Suosikkisijannit.txt");
+                text = text.Replace(vanhaSana, uusiSana);
+                File.WriteAllText(@"c:\MyDir\Suosikkisijannit.txt", text);
+
+                using (StreamReader sr = File.OpenText(path))
                 {
-                    Console.WriteLine(s);
+                    string s = "";
+                    Console.WriteLine("\nNykyiset suosikkisijainnit: ");
+                    while ((s = sr.ReadLine()) != null)
+                    {
+                        Console.WriteLine(s);
+                    }
                 }
             }
+            catch { Console.WriteLine("Et poistanut Sijainteja"); }
         }
     }
 }
